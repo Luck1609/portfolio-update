@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+body, .mce-content-body, .MuiFormLabel-root {
+  font-family: "Poppins", sans-serif !important;
+}
+
+body, .mce-content-body {
+  @apply text-lg leading-8 bg-zinc-50 !important;
+}
+
+.overlay {
+  @apply before:absolute before:left-0 before:top-0 before:w-full before:bg-black before:z-10 before:h-full before:bg-opacity-70;
+}
+
+.container {
+  @apply max-w-7xl w-full m-auto;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @apply text-basic
+}
+
+.flip {
+  transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
+}
+
+.timeline {
+  /* @apply px-5 relative; */
+  @apply border-l-2 px-5 relative border-primary mb-14;
+}
+
+.float {
+  @apply before:w-4 before:h-4 before:absolute before:border-primary before:border-2 before:-left-2.5 before:top-1.5 before:rounded-full;
+  /* @apply before:w-4 before:h-4 before:absolute before:border-primary before:border-2 before:-left-2.5 before:-top-4 before:rounded-full; */
+}
+
+/* .timeline .timeline-heading {
+  @apply -top-6 relative
+} */
+
+.timeline .timeline-heading label {
+  @apply font-bold text-xl text-basic;
+}
+
+/* .table-container .MuiPaper-root {
+  @apply shadow-none
+}
+
+
+.table-container .MuiTableCell-root {
+  @apply border-b border-slate-100
+}
+
+.table-container .MuiTablePagination-root, .table-container .MuiInput-root:before {
+  @apply border-b-0
+} */
+
+.custom .MuiSelect-select, .MuiOutlinedInput-input {
+  padding: 7px;
+}
+
+.cusstom .MuiInputLabel-root {
+  @apply text-[12px]
+}
+
+
+/* Inline tinymce styles */
+.mce-content-body {
+}
