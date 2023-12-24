@@ -1,4 +1,5 @@
 import { IReducerActions, IReducerState } from "@/interface";
+import { FORMS, NOTICE, USER } from "./types";
 
 
 
@@ -7,6 +8,11 @@ export const initialState: IReducerState = {
     title: "",
     values: {},
     field: ""
+  },
+  user: null,
+  notice: {
+    title: "",
+    id: ""
   }
 }
 
@@ -17,11 +23,24 @@ const reducer = (state = initialState, action = initialAction) => {
   const { type, payload } = action;
 
   switch (type) {
-    case "forms":
+    case FORMS:
       return {
         ...state,
         forms: !payload ? initialState.forms : payload
       }
+
+    case USER:
+      return {
+        ...state,
+        user: !payload ? initialState.user : payload
+      }
+
+    case NOTICE:
+      return {
+        ...state,
+        notice: !payload ? initialState.notice : payload
+      }
+
   
     default:
       return state;

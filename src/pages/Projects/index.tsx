@@ -7,7 +7,7 @@ export default function Projects() {
     <ModalFormContainer
       payload={{
         title: "Add Project",
-        field: "project",
+        field: "projects",
         values: {
           previewImg: "",
           title: "",

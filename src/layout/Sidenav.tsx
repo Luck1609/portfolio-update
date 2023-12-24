@@ -13,14 +13,15 @@ import images from "@/assets/img";
 import Btn from "@/components/Btn";
 import Helper from "@/helpers";
 import { toast } from "react-toastify";
-import { MouseEventHandler } from "react";
+import { FormEvent } from "react";
+import { useStateUpdate } from "@/hooks/useStateUpdate";
 
-const { http, api } = Helper;
+const { http, api, errorNarrowing } = Helper;
 
-export default function Sidenav({ user }: { user: string[] }) {
-  // const user = useOutletContext()
+export default function Sidenav() {
+  const { state: { user } } = useStateUpdate();
 
-  const logout = async (e: MouseEventHandler) => {
+  const logout = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
@@ -28,7 +29,7 @@ export default function Sidenav({ user }: { user: string[] }) {
       toast.success("Logout successful");
       window.location.href = "/";
     } catch (error) {
-      toast.error(error.message);
+      toast.error(errorNarrowing(error));
     }
   };
 

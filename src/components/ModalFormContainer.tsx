@@ -1,18 +1,14 @@
-// import { useEffect } from "react";
-import { useOutletContext } from "react-router-dom";
+import useSWR from "swr";
 import { Add } from "@mui/icons-material";
 import Btn from "@/components/Btn";
 import ModalForm from "./ModalForm";
 import { forms } from "@/forms";
 import { FORMS } from "@/reducer/types";
 import { useStateUpdate } from "@/hooks/useStateUpdate";
-// import { IReducerState } from "@/interface";
 
 export default function ModalFormContainer({ payload }: { payload: IProjectPayload }) {
-  // const { state, dispatch } = useStateUpdate();
-  const { state, dispatch }: { state: object, dispatch: object } = useStateUpdate();
-  // const { state, dispatch }: { state: IReducerState, dispatch: (props: object) => void } = useStateUpdate();
-  const user: object = useOutletContext();
+  const { data  } = useSWR(`/${payload.field}`)
+  const { state: { user, forms: stateForm }, dispatch } = useStateUpdate();
 
   const toggleForm = () => {
     dispatch(
@@ -22,11 +18,12 @@ export default function ModalFormContainer({ payload }: { payload: IProjectPaylo
       }
     )
   };
-  console.log("Toggler instance", state)
 
   const Profiler = forms[payload.field].profiler;
   const Card = forms[payload.field].card;
 
+
+  // console.log("Database infor for", data)
 
   return (
     <>
@@ -45,13 +42,13 @@ export default function ModalFormContainer({ payload }: { payload: IProjectPaylo
             </div>
           )}
 
-          <Card />
+          <Card data={data} />
         </div>
       </article>
 
-      {state.forms.title && state.forms.field && (
+      {stateForm.title && stateForm.field && (
         <>
-          <ModalForm handler={state.forms.field} close={toggleForm} />
+          <ModalForm handler={stateForm.field} close={toggleForm} />
         </>
       )}
     </>

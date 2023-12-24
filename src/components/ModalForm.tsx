@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { useForm, FormProvider } from "react-hook-form";
+import { AxiosResponse } from "axios";
 import { Close } from "@mui/icons-material";
 import Btn from "./Btn";
 import { FormTypes, forms as Forms } from "@/forms";
 import Helper from "@/helpers";
-import { AxiosResponse } from "axios";
 import { toast } from "react-toastify";
 import { useStateUpdate } from "@/hooks/useStateUpdate";
 import { FORMS } from "@/reducer/types";
@@ -15,7 +15,7 @@ type ModalTypes = {
   close: () => void
 }
 
-const { http } = Helper;
+const { http, errorNarrowing } = Helper;
 
 export default function ModalForm({ handler }: ModalTypes) {
   const { state: { forms }, dispatch } = useStateUpdate();
@@ -29,19 +29,51 @@ export default function ModalForm({ handler }: ModalTypes) {
     reset(forms.values)
   }, [forms.values, reset])
   
+  // const submit = async (payload: FormTypes) => {
+  //   const { id } = payload;
+
+  //   console.log("Form payload", payload)
+
+  //   const method = id ? "patch" : "post";
+
+  //   try {
+  //     const result: AxiosResponse =  await http[method](`${ target.url }${ id ? ("/" + id) : "" }`, payload)
+  //     toast.success(result?.message)
+  //     close()
+  //   } catch(err) {
+  //     toast.error(errorNarrowing(err))
+  //   }
+  // }
+
+  
   const submit = async (payload: FormTypes) => {
-    const { id } = payload;
+    let formData: object, id: string | null, method: string;
 
-    console.log("Form payload", payload)
+    console.log("FormData values before =>", payload)
+    if (target?.submit) {
+      formData = target.submit(payload)
+      console.log("target has submit function")
+    }
+    else formData = payload;
 
-    const method = id ? "patch" : "post";
+    if (payload && "id" in payload) {
+      id = payload.id
+      method = "patch"
+    }
+    else {
+      method = "post";
+      id = null
+    }
+    
+    // console.log("FormData values =>", formData)
 
     try {
-      const result: AxiosResponse =  await http[method](`${ target.url }${ id ? ("/" + id) : "" }`, payload)
-      toast.success(result?.message)
+      const { data }: AxiosResponse =  await http[method](`${ target.url }${ id ? ("/" + id) : "" }`, formData)
+      toast.success(data?.message)
       close()
-    } catch(err) {
-      toast.success(err.message)
+    } catch(error) {
+      
+      toast.success(errorNarrowing(error))
     }
   }
 

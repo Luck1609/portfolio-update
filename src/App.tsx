@@ -1,13 +1,29 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
+import useSWR from "swr";
 import Layout from "./layout"
 import Page from "./pages"
 import AuthLayout from "./layout/AuthLayout"
 import Login from "./pages/Auth/Login"
 import ForgotPassword from "./pages/Auth/ForgotPassword"
 import ResetPassword from "./pages/Auth/ResetPassword"
+import { useEffect } from "react";
+import { useStateUpdate } from "./hooks/useStateUpdate";
+import { USER } from "./reducer/types";
 
 function App() {
-  console.log("App ready")
+  const { data: user } = useSWR("/auth/me");
+  const { dispatch } = useStateUpdate()
+
+  useEffect(() => {
+    if (user) {
+      dispatch({ type: USER, payload: user })
+    }
+  
+    // return () => {
+    //   second
+    // }
+  }, [user, dispatch])
+  
 
   return (
     <BrowserRouter>

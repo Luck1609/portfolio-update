@@ -2,8 +2,9 @@ import { PhotoSizeSelectActual } from "@mui/icons-material";
 import { useFormContext } from "react-hook-form";
 // import Helper from "@/helpers/index";
 import { IStringObj } from "@/interface";
+import Helper from "@/helpers";
 
-// const { assets } = Helper;
+const { asset } = Helper;
 
 
 
@@ -29,7 +30,7 @@ export default function FileUploader({ name, label, baseUrl }: IStringObj) {
               <PhotoSizeSelectActual className="h-16 w-20 text-slate-200 bg-white rounded" />
             ) : (
               <img
-                src={`${baseUrl}/${file}`}
+                src={`${asset}/${baseUrl}/${file}`}
                 alt="Server img"
                 className="h-16 w-20 object-cover rounded p-1"
               />

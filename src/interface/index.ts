@@ -62,6 +62,14 @@ interface IReducerState {
     title: string,
     values: object,
     field: string
+  },
+  user: {
+    name: string,
+    email: string
+  } | null,
+  notice: {
+    title: string,
+    id: string
   }
 }
 

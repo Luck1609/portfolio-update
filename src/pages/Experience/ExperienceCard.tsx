@@ -1,9 +1,11 @@
 import { Chip } from "@mui/material";
 import CardActionsBtn from "@/components/CardActionsBtn";
-import { useOutletContext } from "react-router-dom";
+import { useStateUpdate } from "@/hooks/useStateUpdate";
 
-export default function ExperienceCard() {
-  const user: object = useOutletContext();
+export default function ExperienceCard({ data }) {
+  const {
+    state: { user },
+  } = useStateUpdate();
 
   return (
     <div className="py-10 grid lg:grid-cols-2 gap-y-10">

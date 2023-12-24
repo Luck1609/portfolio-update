@@ -5,7 +5,7 @@ export default function Experience() {
     <ModalFormContainer
       payload={{
         title: "Add Experience",
-        field: "experience",
+        field: "experiences",
         values: {
           company: "",
           role: "",
